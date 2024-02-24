@@ -17,7 +17,6 @@
 
         <mapping class="org.sql.hibernate.entity.User"/>
         <mapping class="org.sql.hibernate.entity.UserDetails"/>
-        <mapping class="org.sql.hibernate.entity.ShoppingCart"/>
         <mapping class="org.sql.hibernate.entity.Product"/>
         <mapping class="org.sql.hibernate.entity.Order"/>
 
