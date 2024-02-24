@@ -1,6 +1,4 @@
 package org.sql.hibernate.entity;
-
-
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -9,21 +7,32 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String surname;
     @OneToOne
     @JoinColumn(name = "user_details_id")
     private UserDetails userDetails;
-    @OneToMany
-    private List<Order> orders;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "shopping_carts",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")}
+    )
+    private List<Product> products;
     public User() {
     }
-    public User(int id, String name, String surname, UserDetails userDetails) {
+
+    public User(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+
+    public User(int id, String name, String surname) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.userDetails = userDetails;
     }
 
     public int getId() {
@@ -58,12 +67,12 @@ public class User {
         this.userDetails = userDetails;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     @Override

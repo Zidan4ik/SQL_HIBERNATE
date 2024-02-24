@@ -1,19 +1,25 @@
 package org.sql.hibernate.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "products")
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private int price;
-
+    @ManyToMany(mappedBy = "products")
+    private List<User> users;
     public Product() {
+    }
+
+    public Product(String name, int price) {
+        this.name = name;
+        this.price = price;
     }
 
     public Product(int id, String name, int price) {
@@ -48,10 +54,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                '}';
+                ", name=" + name  +
+                ", price=" + price;
     }
 }

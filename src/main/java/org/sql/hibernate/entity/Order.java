@@ -6,21 +6,29 @@ import jakarta.persistence.*;
 @Table(name = "orders")
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String list;
     @Column(name = "total_sum")
     private int totalSum;
     @ManyToOne
-    private User orders;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Order() {
     }
 
-    public Order(int id, String list, int totalSum, User orders) {
+    public Order(String list, int totalSum, User user) {
+        this.list = list;
+        this.totalSum = totalSum;
+        this.user = user;
+    }
+
+    public Order(int id, String list, int totalSum, User user) {
         this.id = id;
         this.list = list;
         this.totalSum = totalSum;
-        this.orders = orders;
+        this.user = user;
     }
 
     public int getId() {
@@ -47,12 +55,12 @@ public class Order {
         this.totalSum = totalSum;
     }
 
-    public User getOrders() {
-        return orders;
+    public User getUser() {
+        return user;
     }
 
-    public void setOrders(User orders) {
-        this.orders = orders;
+    public void setUser(User orders) {
+        this.user = orders;
     }
 
     @Override
@@ -61,7 +69,7 @@ public class Order {
                 "id=" + id +
                 ", list='" + list + '\'' +
                 ", totalSum=" + totalSum +
-                ", orders=" + orders +
+                ", user=" + user +
                 '}';
     }
 }

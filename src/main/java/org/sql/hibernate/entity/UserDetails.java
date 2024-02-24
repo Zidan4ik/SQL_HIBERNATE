@@ -1,8 +1,6 @@
 package org.sql.hibernate.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user_details")
@@ -12,6 +10,8 @@ public class UserDetails {
     private int age;
     private String phone;
     private String job;
+    @OneToOne(mappedBy = "userDetails")
+    private User userDetails;
 
     public UserDetails() {
     }
